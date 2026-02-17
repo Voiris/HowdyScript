@@ -26,10 +26,14 @@ class Parser:
 
     def expect(self, token_type):
         tok = self.peek()
-        if tok and tok.type == token_type:
-            self.advance()
-            return tok
-        raise SyntaxError(f'Expected {token_type}, got {tok.type}')
+        if tok:
+            if tok.type == token_type:
+                self.advance()
+                return tok
+            else:
+                raise SyntaxError(f'Expected {token_type}, got {tok.type}')
+        else:
+            raise SyntaxError(f'Unexpected end of file. Expected {token_type}')
 
 
     def parse(self):
